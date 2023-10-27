@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import  Actions  from "./components/Actions";
+import TransferList from "./components/TransferList";
+import { useTransferProps } from "./context/transfer-context";
 
 function App() {
+  const appProps = useTransferProps()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App flex">
+      <TransferList
+        items={appProps.getLeftItems()}
+        handleOnchecked={appProps.handleOncheckedLeft}
+      />
+      <Actions
+        setLeftItems={() => {
+          appProps.addToLeft();
+        }}
+        setRightItems={() => {
+          appProps.addToRight();
+        }}
+      />
+      <TransferList
+        items={appProps.getRightItems()}
+        handleOnchecked={appProps.handleOncheckedRight}
+      />
     </div>
   );
 }
